@@ -41,11 +41,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
               print(error.localizedDescription)
            } else if let data = data {
               let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-            
-            
-                // TODO: Get the array of movies
-                // TODO: Store the movies in a property to use elsewhere
-                // TODO: Reload your table view data
                 
                 // make movies look at dataDictionary and get out results
                 // cast as an array of dictionaries
@@ -100,14 +95,34 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
 
-    /*
+    
+    // Special function: prepare (when you are leaving ur screen
+    // and want to prepare the next screen
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        print("Loading up the details screen")
+        
+        // Find the selected movie
+        // Cell that was tapped on
+        let cell = sender as! UITableViewCell
+        // Index path for that cell
+        let indexPath = tableView.indexPath(for: cell)!
+        // Acces array
+        let movie = movies[indexPath.row]
+        
+        // Pass the selected movie to the details view controller
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        // Unhighlight selected movies when transitioning
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
-    */
+ 
 
 }
